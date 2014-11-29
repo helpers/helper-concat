@@ -1,0 +1,49 @@
+{
+  "name": "helper-concat",
+  "description": "Template helper for concatenating a list of files using glob patterns. Should work with any template engine.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jonschlinkert/helper-concat",
+  "author": {
+    "name": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jonschlinkert/helper-concat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/helper-concat/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jonschlinkert/helper-concat/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "dependencies": {
+    "globby": "^1.0.0"
+  },
+  "devDependencies": {
+    "handlebars": "^2.0.0",
+    "lodash": "^2.4.1",
+    "mocha": "*",
+    "should": "*"
+  },
+  "keywords": [
+    "concat",
+    "concatenate",
+    "content",
+    "files",
+    "glob",
+    "helper",
+    "patterns",
+    "read"
+  ]
+}
