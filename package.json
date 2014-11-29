@@ -1,6 +1,6 @@
 {
   "name": "helper-concat",
-  "description": "Template helper for concatenating a list of files using glob patterns. Should work with any template engine.",
+  "description": "Template helper for concatenating a list of files using glob patterns. Should work with handlebars, lodash or any template engine that allows helper functions.",
   "version": "0.1.0",
   "homepage": "https://github.com/jonschlinkert/helper-concat",
   "author": {
@@ -42,8 +42,15 @@
     "content",
     "files",
     "glob",
+    "handlebars",
     "helper",
+    "helpers",
+    "lo-dash",
+    "lodash",
     "patterns",
-    "read"
+    "read",
+    "underscore",
+    "util",
+    "utils"
   ]
 }

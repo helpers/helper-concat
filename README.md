@@ -1,6 +1,6 @@
 # helper-concat [![NPM version](https://badge.fury.io/js/helper-concat.svg)](http://badge.fury.io/js/helper-concat)
 
-> Template helper for concatenating a list of files using glob patterns. Should work with any template engine.
+> Template helper for concatenating a list of files using glob patterns. Should work with handlebars, lodash or any template engine that allows helper functions.
 
 ## Install with [npm](npmjs.org)
 
