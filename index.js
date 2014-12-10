@@ -7,12 +7,32 @@
 
 'use strict';
 
-var glob = require('globby');
+/**
+ * Module dependencies
+ */
+
 var fs = require('fs');
+var glob = require('globby');
+var async = require('async');
+var extend = require('extend-shallow');
 
 /**
- * Return the contatenated content from a list of files
- * using glob patterns.
+ * Expose `concat`
+ */
+
+module.exports = concat;
+
+/**
+ * Get the contatenated content from a glob of files.
+ *
+ * ```js
+ * var concat = require('helper-concat');
+ *
+ * concat('files/*.md', function(err, content) {
+ *   //=> 'AAA\nBBB\nCCC'
+ * });
+ * ```
+ * As a helper:
  *
  * ```handlebars
  * {{concat 'files/*.md'}}
@@ -20,12 +40,50 @@ var fs = require('fs');
  * @param {String} `patterns`
  * @param {Options} `options`
  * @return {String}
+ * @api public
  */
 
-module.exports = function(patterns, options) {
+function concat(patterns, options, cb) {
+  if (typeof options === 'function') {
+    cb = options;
+    options = {};
+  }
+
+  var opts = extend({sep: '\n'}, options);
+
+  glob(patterns, options, function(err, files) {
+    async.concatSeries(files, fs.readFile, function(err, arr) {
+      if (err) return cb(err);
+      cb(null, arr.join(opts.sep));
+    });
+  });
+};
+
+/**
+ * Synchronously get the contatenated content from a glob of files.
+ *
+ * ```js
+ * var concat = require('helper-concat');
+ *
+ * concat('files/*.md');
+ * //=> 'AAA\nBBB\nCCC'
+ * ```
+ * As a helper:
+ *
+ * ```handlebars
+ * {{concat 'files/*.md'}}
+ * ```
+ * @param {String} `patterns`
+ * @param {Options} `options`
+ * @return {String}
+ * @api public
+ */
+
+module.exports.sync = function concatSync(patterns, options) {
   var files = glob.sync(patterns, options);
+  var opts = extend({sep: '\n'}, options);
 
   return files.map(function (fp) {
     return fs.readFileSync(fp, 'utf8');
-  }).join('\n');
+  }).join(opts.sep);
 };
