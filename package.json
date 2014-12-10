@@ -1,7 +1,7 @@
 {
   "name": "helper-concat",
   "description": "Template helper for concatenating a list of files using glob patterns. Should work with handlebars, lodash or any template engine that allows helper functions.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/jonschlinkert/helper-concat",
   "author": {
     "name": "Jon Schlinkert",
@@ -28,6 +28,8 @@
     "test": "mocha -R spec"
   },
   "dependencies": {
+    "async": "^0.9.0",
+    "extend-shallow": "^0.1.1",
     "globby": "^1.0.0"
   },
   "devDependencies": {
