@@ -1,8 +1,8 @@
 /*!
  * helper-concat <https://github.com/jonschlinkert/helper-concat>
  *
- * Copyright (c) 2014 Jon Schlinkert, contributors.
- * Licensed under the MIT license.
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
  */
 
 'use strict';
@@ -87,3 +87,4 @@ module.exports.sync = function concatSync(patterns, options) {
     return fs.readFileSync(fp, 'utf8');
   }).join(opts.sep);
 };
+
