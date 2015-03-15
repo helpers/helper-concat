@@ -7,10 +7,11 @@
 
 'use strict';
 
-var should = require('should');
-var handlebars = require('handlebars');
+/* deps:mocha */
 var _ = require('lodash');
+var handlebars = require('handlebars');
 var concat = require('./');
+require('should');
 
 describe('async', function () {
   var orig = process.cwd();
@@ -20,7 +21,6 @@ describe('async', function () {
   after(function () {
     process.chdir(orig);
   });
-
 
   describe('concat helper', function () {
     it('should return the contents of a file:', function (done) {
@@ -49,42 +49,47 @@ describe('async', function () {
 describe('sync', function () {
   describe('concat helper', function () {
     it('should return the contents of a file:', function () {
-      concat.sync('a.txt').should.equal('AAA');
+      concat.sync('fixtures/a.txt').should.equal('AAA');
     });
 
     it('should return the concatenated contents of a list of files:', function () {
-      concat.sync('*.txt').should.equal('AAA\nBBB\nCCC');
+      concat.sync('fixtures/*.txt').should.equal('AAA\nBBB\nCCC');
     });
 
     it('should use a custom separator:', function () {
-      concat.sync('*.txt', {sep: '~'}).should.equal('AAA~BBB~CCC');
+      concat.sync('fixtures/*.txt', {sep: '~'}).should.equal('AAA~BBB~CCC');
     });
   });
 
   describe('handlebars:', function () {
     it('should work as a handlebars helper:', function () {
       handlebars.registerHelper('concat', concat.sync);
-      handlebars.compile('{{concat "*.txt"}}')().should.equal('AAA\nBBB\nCCC');
+      handlebars.compile('{{concat "fixtures/*.txt"}}')().should.equal('AAA\nBBB\nCCC');
     });
   });
 
   describe('lodash:', function () {
+    var settings;
+
+    beforeEach(function () {
+      settings = {imports: {concat: concat.sync}};
+    })
     it('should work as a lodash mixin:', function () {
       _.mixin({concat: concat.sync});
-      _.template('<%= _.concat("*.txt") %>', {}).should.equal('AAA\nBBB\nCCC');
+      _.template('<%= _.concat("fixtures/*.txt") %>', {})().should.equal('AAA\nBBB\nCCC');
     });
 
     it('should work when passed to lodash on the context:', function () {
-      _.template('<%= concat("*.txt") %>', {concat: concat.sync}).should.equal('AAA\nBBB\nCCC');
+      _.template('<%= concat("fixtures/*.txt") %>', settings)().should.equal('AAA\nBBB\nCCC');
     });
 
     it('should work as a lodash import:', function () {
       var settings = {imports: {concat: concat.sync}};
-      _.template('<%= concat("*.txt") %>', {}, settings).should.equal('AAA\nBBB\nCCC');
+      _.template('<%= concat("fixtures/*.txt") %>', settings)().should.equal('AAA\nBBB\nCCC');
     });
 
     it('should read a glob of files and concatenate them.', function() {
-      _.template('<%= concat("*.js") %>', imports)().should.equal([
+      _.template('<%= concat("fixtures/*.js") %>', settings)().should.equal([
         'function foo(a, b, c) {',
         '  return a + b + c;',
         '}',
